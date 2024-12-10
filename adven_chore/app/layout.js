@@ -23,6 +23,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Health Bar */}
+        <div className="health-bar">
+          <div className="health-bar-fill"></div>
+        </div>
         {children}
       </body>
     </html>
