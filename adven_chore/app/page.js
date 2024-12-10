@@ -1,21 +1,22 @@
 'use client'
 import { useState } from "react";
-import TaskList from "./components/TaskList";
-import TaskForm from "./components/TaskForm";
+import ChoreList from "./components/ChoreList";
+import DiceRoller from "./components/DiceRoller";
 
 export default function Home() {
-  const [tasks, setTasks] = useState([]);
-
-  const addTask = (task) => setTasks([...tasks, task]);
-  const editTask = (updatedTask) => {
-    setTasks(tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
-  };
-  const removeTask = (id) => setTasks(tasks.filter((task) => task.id !== id));
+  const [level, setLevel] = useState("cantrips");
 
   return (
     <div>
-      <TaskForm onAdd={addTask} />
-      <TaskList tasks={tasks} onEdit={editTask} onRemove={removeTask} />
+      <h1 className="text-2xl font-bold">Slay the Dragon</h1>
+      <div className="flex space-x-4 mt-4">
+        <button onClick={() => setLevel("cantrips")} className="bg-blue-500 text-white p-2">Cantrips</button>
+        <button onClick={() => setLevel("level1")} className="bg-yellow-500 text-white p-2">1st Level</button>
+        <button onClick={() => setLevel("level2")} className="bg-red-500 text-white p-2">2nd Level</button>
+      </div>
+
+      <ChoreList level={level} />
+      <DiceRoller level={level} />
     </div>
   );
 }
