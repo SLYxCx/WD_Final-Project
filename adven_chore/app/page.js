@@ -1,8 +1,6 @@
 'use client'
 import { useState } from "react";
 import ChoreChart from "./components/ChoreChart";
-import ChoreList from "./components/ChoreList";
-import DiceRoller from "./components/DiceRoller";
 
 export default function Home() {
   const [level, setLevel] = useState("cantrips");
