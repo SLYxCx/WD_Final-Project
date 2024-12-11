@@ -18,8 +18,6 @@ export default function Home() {
 
       {/* Components */}
       <ChoreChart />
-      <DiceRoller />
-      <ChoreList />
     </div>
   );
 }

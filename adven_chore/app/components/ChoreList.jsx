@@ -1,6 +1,18 @@
-import { chores } from "../state/tasks";
+import { useState } from "react";
+import { chores as initialChores } from "../state/tasks";
 
-export default function ChoreList() {
+export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick }) {
+  const [chores, setChores] = useState(initialChores);
+
+  const handleTaskClick = (level, task) => {
+    setChores((prev) => ({
+      ...prev,
+      [level]: prev[level].filter((t) => t.id !== task.id),
+    }));
+
+    onTaskClick(task.damage);
+  };
+
   return (
     <div className="space-y-6">
       {Object.entries(chores).map(([level, tasks]) => (
@@ -10,7 +22,10 @@ export default function ChoreList() {
             {tasks.map((task) => (
               <li
                 key={task.id}
-                className="flex justify-between p-2 hover:bg-gray-200 rounded-md"
+                className={`flex justify-between p-2 rounded-md cursor-pointer ${
+                  highlightedTask?.id === task.id ? "bg-yellow-200" : "hover:bg-red-100"
+                }`}
+                onClick={() => handleTaskClick(level, task)}
               >
                 <span>{task.name}</span>
                 <span className="text-gray-500">{task.damage} HP</span>
