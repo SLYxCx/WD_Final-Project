@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ChoreList from "./ChoreList";
+import { chores as initialChores } from "../state/tasks";
 
 export default function ChoreChart() {
   const totalHP = 310; // Dragon's total HP

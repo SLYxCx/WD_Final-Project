@@ -18,7 +18,7 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick 
       {Object.entries(chores).map(([level, tasks]) => (
         <div key={level} className="bg-gray-100 p-4 rounded-md shadow">
           <h2 className="text-xl font-bold text-gray-700 capitalize">{level}</h2>
-          <ul className="divide-y divide-gray-300 mt-2">
+          <ul className="divide-y divide-gray-30  0 mt-2">
             {tasks.map((task) => (
               <li
                 key={task.id}
