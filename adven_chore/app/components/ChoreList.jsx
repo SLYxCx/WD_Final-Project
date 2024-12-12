@@ -29,6 +29,19 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick 
     }
   };
 
+  const getOptionsForLevel = (level) => {
+    switch (level) {
+      case 'Cantrips':
+        return [10, 20, 30];
+      case '1st level':
+        return [20, 30, 40];
+      case '2nd level':
+        return [30, 40, 60];
+      default:
+        return [];
+    }
+  };
+
   return (
     <div className="flex">
       <div className="w-2/3">
@@ -50,10 +63,9 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick 
                     className="mr-2 p-1 border rounded"
                   />
                   <select id={`priority-${task.id}`} className="p-1 border rounded">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="40">40 </option>
+                    {getOptionsForLevel(level).map((value) => (
+                      <option key={value} value={value}>{value}</option>
+                    ))}
                   </select>
                 </li>
               ))}
