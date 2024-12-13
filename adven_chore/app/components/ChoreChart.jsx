@@ -2,18 +2,41 @@ import { useState } from "react";
 import ChoreList from "./ChoreList";
 
 export default function ChoreChart() {
-  const [totalHP, setTotalHP] = useState(0); // Dragon's total HP
-  const [damageDealt, setDamageDealt] = useState(0);
-  const [selectedLevel, setSelectedLevel] = useState("Cantrips"); // Default level
-  const [highlightedTask, setHighlightedTask] = useState(null); // Task to highlight
-  const [isQuestStarted, setIsQuestStarted] = useState(false);
+  // State for managing the total HP of the dragon
+  const [totalHP, setTotalHP] = useState(0);
 
+  // State for managing the accumulated damage dealt to the dragon
+  const [damageDealt, setDamageDealt] = useState(0);
+
+  // State for managing the current level of the user's selection.
+  const [selectedLevel, setSelectedLevel] = useState("Cantrips");
+
+  // State for holding the current highlighted task. Used for the Dice roller function.
+  const [highlightedTask, setHighlightedTask] = useState(null);
+
+  // Boolean flag to check if user has started his quest. Will lock editing tasks if true.
+  const [isQuestStarted, setIsQuestStarted] = useState(false); // .
+
+
+  /**
+   * Calculates the remaining HP of the dragon.
+   * Returns 0 if damage exceeds totalHP to avoid negative values.
+   */
   const remainingHP = totalHP - damageDealt;
 
+  /**
+   * Updates the accumulated damage dealt to the dragon.
+   * Prevents the total damage from exceeding the dragon's total HP.
+   */
   const handleDamage = (damage) => {
     setDamageDealt((prev) => Math.min(prev + parseInt(damage, 10), totalHP));
   };
 
+
+  /**
+   * Randomly selects a task from the list of tasks at the selected level.
+   * Highlights the selected task for visual emphasis.
+   */
   const handleDiceRoll = (chores) => {
     if (!chores[selectedLevel] || chores[selectedLevel].length === 0) {
       alert("No tasks available in the selected level!");
@@ -25,6 +48,10 @@ export default function ChoreChart() {
     setHighlightedTask(randomTask);
   };
 
+  /**
+   * Starts the quest by calculating the total damage potential of all tasks.
+   * Locks editing and displays the dragon's HP bar.
+   */
   const startQuest = (chores) => {
     const totalDamage = Object.values(chores).flat().reduce((sum, task) => sum + parseInt(task.damage, 10), 0);
     setTotalHP(totalDamage);

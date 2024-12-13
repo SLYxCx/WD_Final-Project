@@ -1,9 +1,20 @@
 import { useState } from "react";
 
+/**
+ * The ChoreList component manages the display and interaction of tasks (chores).
+ * It allows users to add chores and mark them as complete.
+ */
+
 export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick, isQuestStarted, onQuestStart }) {
   const [chores, setChores] = useState({ Cantrips: [], "1st level": [], "2nd level": [] });
   const [completedTasks, setCompletedTasks] = useState({});
 
+
+  /**
+   * Handles changes to the checkbox for a task.
+   * When a task is checked for the first time, deals damage to the dragon based on the task's damage value
+   * and marks the task as completed.
+   */
   const handleCheckboxChange = (level, task) => {
     if (!completedTasks[task.id]) {
       const damageInput = parseInt(document.getElementById(`damage-${task.id}`).value, 10);
@@ -16,6 +27,9 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
     }
   };
 
+  /**
+   * Returns an array of possible damage options based on the task's level.
+   */
   const getOptionsForLevel = (level) => {
     switch (level) {
       case 'Cantrips':
@@ -29,6 +43,10 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
     }
   };
 
+  /**
+   * Adds a new task to the list of chores for the specified level.
+   * The new task is initialized with a default name and damage value.
+   */
   const addTask = (level) => {
     const newTask = { id: Date.now(), name: '', damage: 10 };
     setChores((prev) => ({

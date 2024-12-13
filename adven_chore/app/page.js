@@ -14,7 +14,9 @@ export default function Home() {
         Complete chores to deal damage and defeat the dragon!
       </p>
 
-      {/* Components */}
+      {/* Main Component of our application.
+        Has a child component, "ChoreList".
+      */}
       <ChoreChart />
     </div>
   );
