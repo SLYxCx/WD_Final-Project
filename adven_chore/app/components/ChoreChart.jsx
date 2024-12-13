@@ -15,8 +15,10 @@ export default function ChoreChart() {
   const [highlightedTask, setHighlightedTask] = useState(null);
 
   // Boolean flag to check if user has started his quest. Will lock editing tasks if true.
-  const [isQuestStarted, setIsQuestStarted] = useState(false); // .
+  const [isQuestStarted, setIsQuestStarted] = useState(false);
 
+  // State for managing the current tasks loaded.
+  const [chores, setChores] = useState({ "Cantrips": [], "1st level": [], "2nd level": [] });
 
   /**
    * Calculates the remaining HP of the dragon.
@@ -58,6 +60,37 @@ export default function ChoreChart() {
     setIsQuestStarted(true);
   };
 
+// **SAVE FUNCTION**: Saves the tasks to /state/tasks.json.
+const handleSave = async () => {
+  try {
+    const response = await fetch('/api/saveTasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(chores),
+    });
+    const result = await response.json();
+    alert(result.message); // Notify user
+  } catch (error) {
+    console.error('Error saving tasks:', error);
+    alert('Failed to save tasks.');
+  }
+};
+
+// **LOAD FUNCTION**: Loads the tasks to /state/tasks.json.
+const handleLoad = async () => {
+  try {
+    const response = await fetch('/api/loadTasks');
+    const data = await response.json();
+    setChores(data); // Update tasks
+    startQuest(data); // Recalculate total HP
+    alert('Tasks loaded successfully!');
+  } catch (error) {
+    console.error('Error loading tasks:', error);
+    alert('Failed to load tasks.');
+  }
+};
+
+
   return (
     <div className="mt-6">
       <h2 className="text-xl font-bold text-center">Dragon's HP</h2>
@@ -97,12 +130,45 @@ export default function ChoreChart() {
         </button>
       </div>
 
+
+      {/* Save and load buttons */}
+
+      <div className="flex items-center justify-center space-x-4 mt-6">
+        <button
+          onClick={handleSave}
+          disabled={!isQuestStarted} // Disable Save until quest starts
+          className={`px-4 py-2 rounded-md shadow ${
+            isQuestStarted
+              ? "bg-green-500 text-white hover:bg-green-600"
+              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Save
+        </button>
+        <label
+          htmlFor="file-upload"
+          className="px-4 py-2 bg-orange-500 text-white rounded-md shadow hover:bg-orange-600 cursor-pointer"
+        >
+          Load
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          accept=".json"
+          className="hidden"
+          onChange={handleLoad}
+        />
+      </div>
+
       <ChoreList
         selectedLevel={selectedLevel}
         highlightedTask={highlightedTask}
         onTaskClick={handleDamage}
         isQuestStarted={isQuestStarted}
-        onQuestStart={startQuest}
+        onQuestStart={(chores) => 
+          startQuest(chores)}
+            chores={chores} // Pass down tasks
+            setChores={setChores} // Allow child to update tasks
       />
     </div>
   );

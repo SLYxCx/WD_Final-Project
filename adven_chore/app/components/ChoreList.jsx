@@ -5,8 +5,7 @@ import { useState } from "react";
  * It allows users to add chores and mark them as complete.
  */
 
-export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick, isQuestStarted, onQuestStart }) {
-  const [chores, setChores] = useState({ Cantrips: [], "1st level": [], "2nd level": [] });
+export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick, isQuestStarted, onQuestStart, chores, setChores }) {
   const [completedTasks, setCompletedTasks] = useState({});
 
 
@@ -116,7 +115,7 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
         )}
       </div>
       <div className="w-1/3 flex items-center justify-center">
-        <img src="/path/to/dragon-image.png" alt="Dragon" className="max-w-full h-auto" />
+        <img src="/Dragon.png" alt="Dragon" className="max-w-full h-auto" />
       </div>
     </div>
   );
