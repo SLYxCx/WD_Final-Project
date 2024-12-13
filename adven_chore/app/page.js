@@ -20,7 +20,11 @@ export default function Home() {
         Complete chores to deal damage and defeat the dragon!
       </p>
       <main>
-      {/* Components */}
+  {/* Components */}
+      {/*
+        Main Component of our application.
+        Has a child component, "ChoreList".
+      */}
       <ChoreChart />
       </main>
     </div>

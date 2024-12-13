@@ -1,0 +1,36 @@
+SEE THE "NewDemo.png" FILE!!!!!!
+
+Styling will be done later (dragon image, color scheme, etc.)
+
+"Derrick - You just need change the formatting of the page such that
+it is laid out similarly to the image shared before.
+Don't worry about the database set up stuff."
+
+
+Current Tasks:
+
+- Functionality is complete, but I NEED TO ADD SOME COMMENTARY AND
+UNDERSTAND THE CODE. Otherwise I am confused, and also cannot
+explain it to teammates while we implement mongoDB
+- We need to talk with teammates to integrate the save function
+into mongoDB.
+
+
+- Styling is still needed, but I don't think we have time.
+		Just get the dragon image placed in the placeholder.
+
+
+Other Things:
+	Write a Note (may not have time)
+	Victory Screen? (Seen on line 40 "{remainingHP}")
+
+Steven said he will do backend things.
+And seriously hurry up.
+
+And I need to learn the React debug tools, I need to learn how to
+parse what is actually going on in development code...
+....and probably leave coding. It's WAY too fucking hard.
+I daydream, I kind of am consistently spacing out.
+...Maybe I've been in my mom's house for way too fucking long...
+will come back to coding when I move out.
+My brain just doesn't function like it used to...
