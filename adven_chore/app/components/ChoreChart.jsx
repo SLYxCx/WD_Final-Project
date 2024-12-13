@@ -44,11 +44,12 @@ export default function ChoreChart() {
         {remainingHP} HP remaining
       </p>
 
-      {remainingHP <= 0 && (
+      {totalHP > 0 && remainingHP <= 0 && (
         <p className="text-center text-green-500 mt-4 text-xl font-bold">
           🎉 You defeated the dragon! 🎉
         </p>
       )}
+
 
       <div className="flex items-center justify-center space-x-4 mt-6">
         <select
