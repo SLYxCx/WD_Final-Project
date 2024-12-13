@@ -1,4 +1,5 @@
 import { useState } from "react";
+<<<<<<< Updated upstream
 
 export default function Home() {
   const [health, setHealth] = useState(75);
@@ -15,6 +16,30 @@ export default function Home() {
         </div>
 
         <h1>Game Page</h1>
+=======
+import ChoreChart from "./components/ChoreChart";
+import useAuth from "./hooks/useAuth";
+import Navbar from "./components/Navbar";
+
+export default function Home() {
+  const [level, setLevel] = useState("cantrips");
+  const {user, loading } = useAuth();
+
+  return (
+    user ? ( <div className="flex flex-col min-h-screen">
+      <Navbar /> </div>) :
+    <div className="p-4">
+      <Navbar />
+      <h1 className="text-3xl font-bold text-center text-red-600">
+        Slay the Dragon!
+      </h1>
+      <p className="text-center mt-2 text-gray-700">
+        Complete chores to deal damage and defeat the dragon!
+      </p>
+      <main>
+      {/* Components */}
+      <ChoreChart />
+>>>>>>> Stashed changes
 
         {/* Buttons to Adjust Health */}
         <div className="flex gap-4">
