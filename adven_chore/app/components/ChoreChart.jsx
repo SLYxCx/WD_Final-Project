@@ -1,17 +1,17 @@
 import { useState } from "react";
 import ChoreList from "./ChoreList";
-import { chores as initialChores } from "../state/tasks";
 
 export default function ChoreChart() {
-  const totalHP = 310; // Dragon's total HP
+  const [totalHP, setTotalHP] = useState(0); // Dragon's total HP
   const [damageDealt, setDamageDealt] = useState(0);
-  const [selectedLevel, setSelectedLevel] = useState("cantrips"); // Default level
+  const [selectedLevel, setSelectedLevel] = useState("Cantrips"); // Default level
   const [highlightedTask, setHighlightedTask] = useState(null); // Task to highlight
+  const [isQuestStarted, setIsQuestStarted] = useState(false);
 
   const remainingHP = totalHP - damageDealt;
 
   const handleDamage = (damage) => {
-    setDamageDealt((prev) => Math.min(prev + damage, totalHP));
+    setDamageDealt((prev) => Math.min(prev + parseInt(damage, 10), totalHP));
   };
 
   const handleDiceRoll = (chores) => {
@@ -23,6 +23,12 @@ export default function ChoreChart() {
     const randomTask =
       chores[selectedLevel][Math.floor(Math.random() * chores[selectedLevel].length)];
     setHighlightedTask(randomTask);
+  };
+
+  const startQuest = (chores) => {
+    const totalDamage = Object.values(chores).flat().reduce((sum, task) => sum + parseInt(task.damage, 10), 0);
+    setTotalHP(totalDamage);
+    setIsQuestStarted(true);
   };
 
   return (
@@ -45,20 +51,18 @@ export default function ChoreChart() {
       )}
 
       <div className="flex items-center justify-center space-x-4 mt-6">
-        {/* Dropdown to select level */}
         <select
           className="p-2 bg-white border border-gray-300 rounded-md"
           value={selectedLevel}
           onChange={(e) => setSelectedLevel(e.target.value)}
         >
-          <option value="cantrips">Cantrips</option>
-          <option value="1stLevel">1st Level</option>
-          <option value="2ndLevel">2nd Level</option>
+          <option value="Cantrips">Cantrips</option>
+          <option value="1st level">1st Level</option>
+          <option value="2nd level">2nd Level</option>
         </select>
 
-        {/* Dice roller button */}
         <button
-          onClick={() => handleDiceRoll(initialChores)}
+          onClick={() => handleDiceRoll()}
           className="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600"
         >
           Roll the Dice
@@ -69,6 +73,8 @@ export default function ChoreChart() {
         selectedLevel={selectedLevel}
         highlightedTask={highlightedTask}
         onTaskClick={handleDamage}
+        isQuestStarted={isQuestStarted}
+        onQuestStart={startQuest}
       />
     </div>
   );
