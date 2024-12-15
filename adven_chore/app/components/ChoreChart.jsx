@@ -53,12 +53,23 @@ export default function ChoreChart() {
   /**
    * Starts the quest by calculating the total damage potential of all tasks.
    * Locks editing and displays the dragon's HP bar.
+   *  TEST: remove line 63 logging data.
    */
   const startQuest = (chores) => {
-    const totalDamage = Object.values(chores).flat().reduce((sum, task) => sum + parseInt(task.damage, 10), 0);
-    setTotalHP(totalDamage);
+    const totalDamage = Object.values(chores)
+      .flat()
+      .reduce((sum, task) => {
+        const damageValue = parseInt(task.damage, 10);
+        console.log("Task:", task, "Damage value:", damageValue); // A Testing log, remove after troubleshooting
+        return sum + (isNaN(damageValue) ? 0 : damageValue); // Ignore invalid damage
+      }, 0);
+  
+    console.log("Total Damage (Dragon HP):", totalDamage);
+  
+    setTotalHP(totalDamage > 0 ? totalDamage : 100); // Set default if totalDamage <= 0
     setIsQuestStarted(true);
   };
+  
 
 // **SAVE FUNCTION**: Saves the tasks to /state/tasks.json.
 const handleSave = async () => {
@@ -100,6 +111,16 @@ const handleLoad = async () => {
           style={{ width: `${(remainingHP / totalHP) * 100}%` }}
         />
       </div>
+
+    {/* Dragon Image Section */}
+    <div className="flex justify-center mt-4">
+      <img
+        src="Dragon.png" // Replace with your actual image path
+        alt="Dragon"
+        className="w-32 h-auto" // Control the size with Tailwind classes
+      />
+    </div>
+
       <p className="text-center mt-2 text-gray-600">
         {remainingHP} HP remaining
       </p>

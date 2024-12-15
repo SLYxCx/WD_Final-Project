@@ -47,12 +47,30 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
    * The new task is initialized with a default name and damage value.
    */
   const addTask = (level) => {
-    const newTask = { id: Date.now(), name: '', damage: 10 };
+    const newTask = { id: Date.now(), name: '', damage: 10 }; // '10' default value.
     setChores((prev) => ({
       ...prev,
       [level]: [...prev[level], newTask],
     }));
   };
+
+  /**
+   * This function updates the damage property for the corresponding task when the user selects a new value.
+   * @param  e : Event to trigger change of dropdown
+   * @param {*} level  : Level of the task difficulty.
+   * @param {*} taskId : Task ID
+   */
+  const handleDamageChange = (e, level, taskId) => {
+    const newDamage = parseInt(e.target.value, 10); // Parse selected value
+    setChores((prevChores) => ({
+      ...prevChores,
+      [level]: prevChores[level].map((task) =>
+        task.id === taskId ? { ...task, damage: newDamage } : task
+      ),
+    }));
+  };
+  
+  
 
   return (
     <div className="flex">
@@ -85,9 +103,10 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
                   />
                   <select
                     id={`damage-${task.id}`}
-                    defaultValue={task.damage}
+                    value={task.damage}
                     className="p-1 border rounded"
                     disabled={completedTasks[task.id] || isQuestStarted}
+                    onChange={(e) => handleDamageChange(e, level, task.id)}
                   >
                     {getOptionsForLevel(level).map((value) => (
                       <option key={value} value={value}>
@@ -114,9 +133,7 @@ export default function ChoreList({ selectedLevel, highlightedTask, onTaskClick,
           </button>
         )}
       </div>
-      <div className="w-1/3 flex items-center justify-center">
-        <img src="/Dragon.png" alt="Dragon" className="max-w-full h-auto" />
-      </div>
+      
     </div>
   );
 }
